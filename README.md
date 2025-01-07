@@ -17,8 +17,8 @@
 1. 克隆项目:
 
 ```bash
-git clone https://github.com/yourusername/japanese-gojuon-chart.git
-cd japanese-gojuon-chart
+git clone https://github.com/onewesong/Kana
+cd Kana
 ```
 
 2. 安装依赖:

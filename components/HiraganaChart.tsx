@@ -1,3 +1,5 @@
+'use client';
+
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 
@@ -81,6 +83,18 @@ const HiraganaChart = () => {
     n_single: 'bg-purple-100 hover:bg-purple-200'
   };
 
+  // 添加播放音频的函数
+  const playSound = (char: string) => {
+    if (!char || typeof window === 'undefined') return;
+    
+    const utterance = new SpeechSynthesisUtterance(char);
+    utterance.lang = 'ja-JP';
+    utterance.rate = 0.8; // 语速稍微放慢一点
+    utterance.volume = 1.5;
+    
+    window.speechSynthesis.speak(utterance);
+  };
+
   const renderTable = (characters: CharacterMap, showRomanji = false) => {
     return (
       <div className="overflow-x-auto rounded-lg">
@@ -103,12 +117,20 @@ const HiraganaChart = () => {
                    row === 'n_single' ? 'n' : row}
                 </td>
                 {chars.map((char: string, i: number) => (
-                  <td key={i} className={`p-0.5 sm:p-1 border border-gray-200 text-center w-12 sm:w-14 transition-colors duration-300 ${colorSchemes[row as keyof CharacterMap]}`}>
+                  <td 
+                    key={i} 
+                    className={`p-0.5 sm:p-1 border border-gray-200 text-center w-12 sm:w-14 transition-colors duration-300 
+                      ${colorSchemes[row as keyof CharacterMap]}
+                      ${char ? 'cursor-pointer active:scale-95' : ''}`}
+                    onClick={() => char && playSound(char)}
+                  >
                     {char && (
                       <div className="flex flex-col items-center justify-center">
-                        <div className="text-base sm:text-lg font-medium mb-0.5">{char}</div>
+                        <div className="text-base sm:text-lg font-medium mb-0.5 select-none">
+                          {char}
+                        </div>
                         {showRomanji && (
-                          <div className="text-[2.5vw] sm:text-xs text-gray-600">
+                          <div className="text-[2.5vw] sm:text-xs text-gray-600 select-none">
                             {romanji[row as keyof CharacterMap][i]}
                           </div>
                         )}
