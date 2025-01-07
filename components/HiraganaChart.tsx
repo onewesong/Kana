@@ -1,9 +1,30 @@
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 
+// 首先定义一些类型
+type CharacterRow = string[];
+
+interface CharacterMap {
+  vowels: CharacterRow;
+  k: CharacterRow;
+  s: CharacterRow;
+  t: CharacterRow;
+  n: CharacterRow;
+  h: CharacterRow;
+  m: CharacterRow;
+  y: CharacterRow;
+  r: CharacterRow;
+  w: CharacterRow;
+  n_single: CharacterRow;
+}
+
+type ColorSchemes = {
+  [K in keyof CharacterMap]: string;
+};
+
 const HiraganaChart = () => {
 
-  const hiragana = {
+  const hiragana: CharacterMap = {
     vowels: ['あ', 'い', 'う', 'え', 'お'],
     k: ['か', 'き', 'く', 'け', 'こ'],
     s: ['さ', 'し', 'す', 'せ', 'そ'],
@@ -17,7 +38,7 @@ const HiraganaChart = () => {
     n_single: ['ん', '', '', '', '']
   };
 
-  const katakana = {
+  const katakana: CharacterMap = {
     vowels: ['ア', 'イ', 'ウ', 'エ', 'オ'],
     k: ['カ', 'キ', 'ク', 'ケ', 'コ'],
     s: ['サ', 'シ', 'ス', 'セ', 'ソ'],
@@ -31,7 +52,7 @@ const HiraganaChart = () => {
     n_single: ['ン', '', '', '', '']
   };
 
-  const romanji = {
+  const romanji: CharacterMap = {
     vowels: ['a', 'i', 'u', 'e', 'o'],
     k: ['ka', 'ki', 'ku', 'ke', 'ko'],
     s: ['sa', 'shi', 'su', 'se', 'so'],
@@ -46,7 +67,7 @@ const HiraganaChart = () => {
   };
 
   // 颜色主题方案
-  const colorSchemes = {
+  const colorSchemes: ColorSchemes = {
     vowels: 'bg-red-100 hover:bg-red-200',
     k: 'bg-orange-100 hover:bg-orange-200',
     s: 'bg-yellow-100 hover:bg-yellow-200',
@@ -60,7 +81,7 @@ const HiraganaChart = () => {
     n_single: 'bg-purple-100 hover:bg-purple-200'
   };
 
-  const renderTable = (characters, showRomanji = false) => {
+  const renderTable = (characters: CharacterMap, showRomanji = false) => {
     return (
       <div className="overflow-x-auto rounded-lg">
         <table className="w-full border-collapse bg-white shadow-sm">
@@ -81,14 +102,14 @@ const HiraganaChart = () => {
                   {row === 'vowels' ? '' : 
                    row === 'n_single' ? 'n' : row}
                 </td>
-                {chars.map((char, i) => (
-                  <td key={i} className={`p-1 border border-gray-200 text-center w-14 transition-colors duration-300 ${colorSchemes[row]}`}>
+                {chars.map((char: string, i: number) => (
+                  <td key={i} className={`p-1 border border-gray-200 text-center w-14 transition-colors duration-300 ${colorSchemes[row as keyof CharacterMap]}`}>
                     {char && (
                       <div className="flex flex-col items-center justify-center">
                         <div className="text-lg font-medium mb-0.5">{char}</div>
                         {showRomanji && (
                           <div className="text-xs text-gray-600">
-                            {romanji[row][i]}
+                            {romanji[row as keyof CharacterMap][i]}
                           </div>
                         )}
                       </div>
