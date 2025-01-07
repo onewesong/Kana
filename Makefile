@@ -4,3 +4,6 @@ install:
 
 dev:
 	pnpm dev
+
+build:
+	npx --no-install next build

@@ -84,12 +84,12 @@ const HiraganaChart = () => {
   const renderTable = (characters: CharacterMap, showRomanji = false) => {
     return (
       <div className="overflow-x-auto rounded-lg">
-        <table className="w-full border-collapse bg-white shadow-sm">
+        <table className="w-full border-collapse bg-white shadow-sm text-[3.5vw] sm:text-base">
           <thead>
             <tr>
-              <th className="p-1 border border-gray-200 bg-gray-50 w-8"></th>
+              <th className="p-0.5 sm:p-1 border border-gray-200 bg-gray-50 w-6 sm:w-8"></th>
               {romanji.vowels.map((vowel, index) => (
-                <th key={index} className="p-1 border border-gray-200 bg-pink-50 w-14 text-center font-medium">
+                <th key={index} className="p-0.5 sm:p-1 border border-gray-200 bg-pink-50 w-12 sm:w-14 text-center font-medium">
                   {vowel}
                 </th>
               ))}
@@ -98,17 +98,17 @@ const HiraganaChart = () => {
           <tbody>
             {Object.entries(characters).map(([row, chars]) => (
               <tr key={row}>
-                <td className="p-1 border border-gray-200 text-center text-sm font-medium bg-gray-50 w-8">
+                <td className="p-0.5 sm:p-1 border border-gray-200 text-center text-sm font-medium bg-gray-50 w-6 sm:w-8">
                   {row === 'vowels' ? '' : 
                    row === 'n_single' ? 'n' : row}
                 </td>
                 {chars.map((char: string, i: number) => (
-                  <td key={i} className={`p-1 border border-gray-200 text-center w-14 transition-colors duration-300 ${colorSchemes[row as keyof CharacterMap]}`}>
+                  <td key={i} className={`p-0.5 sm:p-1 border border-gray-200 text-center w-12 sm:w-14 transition-colors duration-300 ${colorSchemes[row as keyof CharacterMap]}`}>
                     {char && (
                       <div className="flex flex-col items-center justify-center">
-                        <div className="text-lg font-medium mb-0.5">{char}</div>
+                        <div className="text-base sm:text-lg font-medium mb-0.5">{char}</div>
                         {showRomanji && (
-                          <div className="text-xs text-gray-600">
+                          <div className="text-[2.5vw] sm:text-xs text-gray-600">
                             {romanji[row as keyof CharacterMap][i]}
                           </div>
                         )}
@@ -125,17 +125,17 @@ const HiraganaChart = () => {
   };
 
   return (
-    <Card className="w-full max-w-3xl bg-gradient-to-br from-pink-50 to-purple-50">
-      <CardHeader className="pb-2">
-        <CardTitle className="text-xl text-center bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-purple-500">
+    <Card className="w-screen sm:w-full max-w-none sm:max-w-3xl bg-gradient-to-br from-pink-50 to-purple-50">
+      <CardHeader className="pb-1 sm:pb-2">
+        <CardTitle className="text-lg sm:text-xl text-center bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-purple-500">
           日本語五十音図
         </CardTitle>
       </CardHeader>
-      <CardContent>
+      <CardContent className="p-1 sm:p-6">
         <Tabs defaultValue="hiragana" className="w-full">
-          <TabsList className="grid w-full grid-cols-2 mb-4 bg-gradient-to-r from-pink-100 to-purple-100">
-            <TabsTrigger value="hiragana" className="data-[state=active]:bg-white">平仮名</TabsTrigger>
-            <TabsTrigger value="katakana" className="data-[state=active]:bg-white">片仮名</TabsTrigger>
+          <TabsList className="grid w-full grid-cols-2 mb-2 sm:mb-4 bg-gradient-to-r from-pink-100 to-purple-100">
+            <TabsTrigger value="hiragana" className="data-[state=active]:bg-white text-sm sm:text-base">平仮名</TabsTrigger>
+            <TabsTrigger value="katakana" className="data-[state=active]:bg-white text-sm sm:text-base">片仮名</TabsTrigger>
           </TabsList>
           <TabsContent value="hiragana">
             {renderTable(hiragana, true)}
